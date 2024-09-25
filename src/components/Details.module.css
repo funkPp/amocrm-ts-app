@@ -1,0 +1,19 @@
+.containerDetails {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  font-size: large;
+  line-height: 30px;
+  width: 400px;
+}
+
+.legend {
+  font-size: smaller;
+  line-height: 20px;
+}
+
+Svg {
+  vertical-align: middle;
+}
