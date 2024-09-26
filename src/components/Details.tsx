@@ -2,29 +2,24 @@ import { useContext } from "react";
 import { Context } from "./FetchGetRequest";
 import styles from "./Details.module.css";
 import Svg from "./Svg";
+import moment, { Moment } from "moment";
 
 enum Color {
-  black = "black",
+  background = "#2c3e50",
   red = "red",
   green = "green",
   yellow = "yellow",
 }
 export default function Details() {
   const { store } = useContext(Context);
+
   let closest_task_at = store.data?.closest_task_at;
-  closest_task_at = closest_task_at ? closest_task_at * 1000 : 0;
-  const dateFormatted = formatDate(closest_task_at as number);
+  const closetTaskAt = closest_task_at
+    ? moment.utc(closest_task_at * 1000)
+    : moment(0);
 
-  const nowNumber = new Date().setHours(0, 0, 0, 0);
-  const dateNumber = new Date(closest_task_at as number).setHours(0, 0, 0, 0);
-  let color;
-
-  if (dateNumber - nowNumber < 0) color = Color.red;
-  else if (dateNumber === nowNumber) color = Color.green;
-  else if (dateNumber - nowNumber > 24 * 3600 * 1000) color = Color.yellow;
-  else color = Color.black;
-
-  // console.log(nowNumber, dateNumber, color);
+  const dateFormatted = closetTaskAt.format("DD.MM.YYYY");
+  const color = getColor(closetTaskAt) as Color;
 
   return (
     <>
@@ -35,7 +30,7 @@ export default function Details() {
         <div>
           Статус:{" "}
           <span id="circle">
-            <Svg color={color} size={25} />
+            <Svg color={color} size={20} />
           </span>
         </div>{" "}
         <br />
@@ -52,24 +47,15 @@ export default function Details() {
             <Svg color={"yellow"} size={15} /> - если более чем через день, то
             желтым.
           </div>
-          <div>
-            <Svg color={"black"} size={15} /> - остальные случаи (в ТЗ такого не
-            было)
-          </div>
         </div>
       </div>
     </>
   );
 }
 
-const formatDate = (date: number) => {
-  if (typeof date !== "number") return;
-  let d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [day, month, year].join(".");
-};
+function getColor(date: Moment) {
+  if (moment.utc().isAfter(date, "day")) return Color.red;
+  if (moment.utc().isSame(date, "day")) return Color.green;
+  if (moment.utc().add(1, "day").isBefore(date, "day")) return Color.yellow;
+  return Color.background;
+}

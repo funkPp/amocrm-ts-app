@@ -1,14 +1,11 @@
 import { useContext } from "react";
 import { Context } from "./FetchGetRequest";
 import style from "./Table.module.css";
-import logo from "../logo.svg";
+import spiner from "../logo.svg";
 import Details from "./Details";
 
 export default function Table() {
-  // console.log(leads);
   const { handleClick, leads, store, closeClick } = useContext(Context);
-  // console.log("store:", store.data?.name);
-  // console.log("load:", store.isLoading);
 
   const renderTable = leads.map((lead) => (
     <tr key={lead.id} className={style.tr} onClick={() => handleClick(lead.id)}>
@@ -35,8 +32,8 @@ export default function Table() {
             X
           </div>
           {store.isLoading ? (
-            <div className={style.containerLogo}>
-              <img src={logo} className="App-logo" alt="logo" />
+            <div className={style.containerSpiner}>
+              <img src={spiner} className="App-spiner" alt="spiner" />
             </div>
           ) : (
             <Details />

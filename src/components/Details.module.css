@@ -6,7 +6,8 @@
   text-align: left;
   font-size: large;
   line-height: 30px;
-  width: 400px;
+  width: 90%;
+  overflow: auto;
 }
 
 .legend {
