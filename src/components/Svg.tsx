@@ -16,7 +16,7 @@ export default function Svf({ color, size }: IProps) {
         r={size / 2}
         fill={color}
         stroke="black"
-        stroke-width="1"
+        strokeWidth="1"
       />
     </svg>
   );

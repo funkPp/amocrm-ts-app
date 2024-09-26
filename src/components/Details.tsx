@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { Context } from "./FetchGetRequest";
 import styles from "./Details.module.css";
-// import { clsx } from "clsx";
-// import circle from "../circle.svg";
 import Svg from "./Svg";
 
 enum Color {
@@ -11,14 +9,14 @@ enum Color {
   green = "green",
   yellow = "yellow",
 }
-//newBranch
 export default function Details() {
   const { store } = useContext(Context);
-  const date = store.data?.closest_task_at;
-  const dateFormatted = formatDate(date as number);
+  let closest_task_at = store.data?.closest_task_at;
+  closest_task_at = closest_task_at ? closest_task_at * 1000 : 0;
+  const dateFormatted = formatDate(closest_task_at as number);
 
   const nowNumber = new Date().setHours(0, 0, 0, 0);
-  const dateNumber = new Date(date as number).setHours(0, 0, 0, 0);
+  const dateNumber = new Date(closest_task_at as number).setHours(0, 0, 0, 0);
   let color;
 
   if (dateNumber - nowNumber < 0) color = Color.red;
@@ -26,7 +24,7 @@ export default function Details() {
   else if (dateNumber - nowNumber > 24 * 3600 * 1000) color = Color.yellow;
   else color = Color.black;
 
-  console.log(nowNumber, dateNumber, color);
+  // console.log(nowNumber, dateNumber, color);
 
   return (
     <>
