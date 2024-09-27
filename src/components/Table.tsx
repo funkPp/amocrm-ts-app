@@ -5,7 +5,7 @@ import spiner from "../logo.svg";
 import Details from "./Details";
 
 export default function Table() {
-  const { handleClick, leads, store, closeClick } = useContext(Context);
+  const { leads, store, closeClick, handleClick } = useContext(Context);
 
   const renderTable = leads.map((lead) => (
     <tr key={lead.id} className={style.tr} onClick={() => handleClick(lead.id)}>

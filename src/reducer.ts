@@ -4,10 +4,8 @@ export const reducer = (state: IState, action: IAction): IState => {
   const { type } = action;
   switch (type) {
     case "Loading":
-      console.log("loading");
       return { ...state, isLoading: true, isShow: true };
     case "Response":
-      console.log("response", action.payload);
       return {
         ...state,
         isLoading: false,
@@ -15,7 +13,6 @@ export const reducer = (state: IState, action: IAction): IState => {
         isShow: true,
       };
     case "Close":
-      console.log("close X");
       return { ...state, isLoading: false, isShow: false };
     default:
       return state;

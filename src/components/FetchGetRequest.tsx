@@ -7,6 +7,7 @@ import { reducer } from "../reducer";
 
 const sourceUrl = process.env.REACT_APP_BASE_URL;
 const LIMIT = process.env.REACT_APP_LIMIT;
+const DELAY = 1000;
 const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 
 export const Context = React.createContext({} as IContext);
@@ -21,7 +22,6 @@ export default function FetchGetLeads() {
     isShow: false,
     data: null,
   } as IState);
-  console.log(sourceUrl, ACCESS_TOKEN, LIMIT);
 
   useEffect(() => {
     let dataAll: ILead[] = [];
@@ -49,7 +49,7 @@ export default function FetchGetLeads() {
             closest_task_at: raw.closest_task_at,
           };
         });
-        console.log(leads);
+
         dataAll = [...dataAll, ...leads];
         if (data._links.next) {
           link = data._links.next.href;
@@ -58,12 +58,11 @@ export default function FetchGetLeads() {
               fetchDataForLeads(link)
                 .then((leads) => setLeads(leads as ILead[]))
                 .catch((err) => setError(err.message as string)),
-            1000
+            DELAY
           );
         } else {
           setLeadsLoading(false);
         }
-        console.log(dataAll);
 
         return dataAll;
       } catch (err) {
@@ -118,22 +117,22 @@ export default function FetchGetLeads() {
   };
 
   if (error) {
-    return <h1> Oops! {error} </h1>;
+    return <h1> Произошла ошибка: {error} </h1>;
   } else
     return (
       <>
         <Context.Provider
           value={{
-            handleClick: hadleClick,
             leads: leads,
             store: store,
+            handleClick: hadleClick,
             closeClick: closeClick,
           }}
         >
           <Table />
         </Context.Provider>
         <div className={clsx(leadsLoading ? styles.loading : styles.pending)}>
-          Loading
+          Загрузка
         </div>
       </>
     );

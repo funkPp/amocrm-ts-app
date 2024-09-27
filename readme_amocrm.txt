@@ -1,9 +1,4 @@
-Чтобы начать работу с React, нужно установить Create React App 
-npx create-react-app amocrm-ts-app --template typescript
-
-
+git clone ...
 cd amocrm-ts-app
+npm i
 npm start
-
-npm install clsx
-npm install moment

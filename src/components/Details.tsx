@@ -19,43 +19,30 @@ export default function Details() {
     : moment(0);
 
   const dateFormatted = closetTaskAt.format("DD.MM.YYYY");
-  const color = getColor(closetTaskAt) as Color;
+  const [color, tooltiptext] = getStatus(closetTaskAt);
 
   return (
-    <>
-      <div className={styles.containerDetails}>
-        <div>Название: {store.data?.name}</div>
-        <div>id: {store.data?.id}</div>
-        <div>Дата: {dateFormatted}</div>
-        <div>
-          Статус:{" "}
-          <span id="circle">
-            <Svg color={color} size={20} />
-          </span>
-        </div>{" "}
-        <br />
-        <div className={styles.legend}>
-          <div>
-            <Svg color={"green"} size={15} /> - eсли задача будет в этот день,
-            то зеленым.
-          </div>
-          <div>
-            <Svg color={"red"} size={15} /> - если нет задачи или она
-            просрочена(поставлена на вчера), то круг должен быть красным
-          </div>
-          <div>
-            <Svg color={"yellow"} size={15} /> - если более чем через день, то
-            желтым.
-          </div>
-        </div>
+    <div className={styles.containerDetails}>
+      <div>Название: {store.data?.name}</div>
+      <div>id: {store.data?.id}</div>
+      <div>Дата: {dateFormatted}</div>
+      <div>
+        Статус:{" "}
+        <span>
+          <Svg color={color} size={20} />
+          <span className={styles.tooltiptext}>{tooltiptext}</span>
+        </span>
       </div>
-    </>
+    </div>
   );
 }
 
-function getColor(date: Moment) {
-  if (moment.utc().isAfter(date, "day")) return Color.red;
-  if (moment.utc().isSame(date, "day")) return Color.green;
-  if (moment.utc().add(1, "day").isBefore(date, "day")) return Color.yellow;
-  return Color.background;
+function getStatus(date: Moment) {
+  if (moment.utc().isAfter(date, "day"))
+    return [Color.red, " - задачи нет или просрочена"];
+  if (moment.utc().isSame(date, "day"))
+    return [Color.green, " - задача в этот день"];
+  if (moment.utc().add(1, "day").isBefore(date, "day"))
+    return [Color.yellow, " - поставлена на через день или далее"];
+  return [Color.background, ""];
 }

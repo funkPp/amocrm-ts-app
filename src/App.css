@@ -2,17 +2,13 @@
   box-sizing: border-box;
 }
 
-:root {
-  --color-background: #2c3e50;
-}
-
 .App {
   text-align: center;
   margin: auto;
 }
 
 .App-spiner {
-  height: 40vmin;
+  height: 30vmin;
   pointer-events: none;
 }
 
@@ -28,7 +24,6 @@
   display: flex;
   flex-direction: row;
   align-items: start;
-  /* font-size: calc(10px + 2vmin); */
   color: white;
 }
 

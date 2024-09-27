@@ -7,7 +7,7 @@
   font-size: large;
   line-height: 30px;
   width: 90%;
-  overflow: auto;
+  padding-left: 20px;
 }
 
 .legend {
@@ -17,4 +17,17 @@
 
 Svg {
   vertical-align: middle;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  color: #d1d1d1;
+  text-align: center;
+  padding: 5px;
+  font-size: smaller;
+  z-index: 1;
+}
+
+Svg:hover ~ .tooltiptext {
+  visibility: visible;
 }
