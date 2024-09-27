@@ -13,10 +13,10 @@ export default function Svf({ color, size }: IProps) {
       <circle
         cx={size / 2}
         cy={size / 2}
-        r={size / 2}
+        r={size / 2 - 1}
         fill={color}
         stroke="black"
-        stroke-width="1"
+        strokeWidth="1"
       />
     </svg>
   );
